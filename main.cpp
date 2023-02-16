@@ -17,6 +17,8 @@
 #include "mbed.h"
 #include "ESP8266Interface.h"
 
+#include <stdio.h>
+
 #include "MLX90614.h"
 // don't pay attention to the error
 #include <MQTTClientMbedOs.h>
@@ -105,26 +107,32 @@ int main()
         // Read object temp first
         objectTemp = thermometer.read_temp('O');
 
-        printf("IR Temperature: %d \r\n", int(objectTemp));
+        // for making sure that the floating point printing works,
+        // the following line was added to the mbed_app.json
+        // "target.printf_lib": "std"
+        // this disables Mbed OS 6.0's 'minimal printf and snprintf'
+        printf("IR Temperature: %.2f \r\n", objectTemp);
         ThisThread::sleep_for(20ms);
 
         // read ambient temperature second
         ambientTemp = thermometer.read_temp('A');
 
-        printf("Ambient Temperature: %d \r\n", int(ambientTemp));
+        printf("IR Temperature: %.2f \r\n", ambientTemp);
 
         // turn off led after temperature has been read
         myled = false;
 
         // send message through MQTT
-        sprintf(buffer, "{\"object\":%d,\"ambient\":%d}", int(objectTemp), int(ambientTemp));
+        sprintf(buffer, "{\"object\":%.2f,\"ambient\":%.2f}", objectTemp, ambientTemp);
         // update payload length to be the length of the message
         // instead of being consistantly 64 bytes
         msg.payloadlen = strlen(buffer);    // <------ Muutettu
         client.publish(MBED_CONF_APP_MQTT_TOPIC, msg);
-        printf("Published!\n\r");
+        // print that the topic was published
+        printf("Published on topic: %s\n\r", MBED_CONF_APP_MQTT_TOPIC);
 
         // wait before reading again
         ThisThread::sleep_for(2s);
     }
+    printf("Loop is done, now stopping.\n\r");
 }

@@ -2,11 +2,11 @@
     "config": {
         "wifi-ssid": {
             "help": "WiFi SSID",
-            "value": "\"Vaihda netti tähän\""
+            "value": "\"EPIC_INTERNET_NAME\""
         },
         "wifi-password": {
             "help": "WiFi Password",
-            "value": "\"Salasana tähän\""
+            "value": "\"EPIC_AND_SECURE_PASSWORD\""
         },
         "esp-rx-pin": {
             "help": "ESP8266 module RX pin",
@@ -41,7 +41,8 @@
         "*": {
             "platform.stdio-convert-newlines": true,
             "esp8266.provide-default" : false,
-            "esp8266.built-in-dns": true
+            "esp8266.built-in-dns": true,
+            "target.printf_lib": "std"
         }
     }
 }
