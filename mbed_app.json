@@ -2,11 +2,11 @@
     "config": {
         "wifi-ssid": {
             "help": "WiFi SSID",
-            "value": "\"EPIC_INTERNET_NAME\""
+            "value": "\"WIFI_NAME\""
         },
         "wifi-password": {
             "help": "WiFi Password",
-            "value": "\"EPIC_AND_SECURE_PASSWORD\""
+            "value": "\"WIFI_PASSWORD\""
         },
         "esp-rx-pin": {
             "help": "ESP8266 module RX pin",
